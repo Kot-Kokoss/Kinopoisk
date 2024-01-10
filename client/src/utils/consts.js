@@ -1,0 +1,8 @@
+export const ADMIN_ROUTE = '/admin'
+export const LOGIN_ROUTE = '/login'
+export const REGISTRATION_ROUTE = '/registration'
+export const FILM_FINDER_ROUTE = '/'
+export const FILM_ROUTE = '/film'
+export const FACE_ROUTE = '/face'
+export const NOMINATION_ROUTE = '/nomination'
+export const AWARD_ROUTE = '/award'
