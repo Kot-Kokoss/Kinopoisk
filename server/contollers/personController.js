@@ -1,20 +1,20 @@
 const uuid = require('uuid')
 const path = require('path')
-const {Faces} = require('../models/models')
+const {Person} = require('../models/models')
 const ApiError = require('../error/ApiError')
 
-class FacesController {
+class PersonController {
     async create(req, res, next) {
         try {
-            const {id, name, birth, position_id, projects_id, nominations_id, awards_id} = req.body
+            const {id, name, birth} = req.body
             const {photo_link} = req.files
     
             let fileName = uuid.v4() + ".jpg"
             photo_link.mv(path.resolve(__dirname, '..', 'static', fileName))
     
-            const face = await Faces.create({id, name, birth, photo_link: fileName, position_id, projects_id, nominations_id, awards_id})
+            const person = await Person.create({id, name, birth, photo_link: fileName})
             
-            return res.json(face)
+            return res.json(person)
         }
         catch (e) {
             next(ApiError.badRequest(e.message))
@@ -23,12 +23,12 @@ class FacesController {
     }
 
     async getAll(req, res) {
-        const faces = await Faces.findAll()
-        return res.json(faces)
+        const persons = await Person.findAll()
+        return res.json(persons)
     }
     async getOne(req, res) {
 
     }
 }
 
-module.exports = new FacesController()
+module.exports = new PersonController()

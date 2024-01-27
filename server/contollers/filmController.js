@@ -4,8 +4,8 @@ const ApiError = require('../error/ApiError')
 class FilmController {
     async create(req, res, next) {
         try {
-            const {id, name, genre_id, description, duration, release_date, format_id, faces_id, nominations_id, awards_id} = req.body
-            const film = await Film.create({id, name, genre_id, description, duration, release_date, format_id, faces_id, nominations_id, awards_id})
+            const {id, name, genre_id, description, duration, release_date} = req.body
+            const film = await Film.create({id, name, genre_id, description, duration, release_date})
             
             return res.json(film)
         }
