@@ -11,14 +11,9 @@ const User = sequelize.define('user', {
 const Film = sequelize.define('film', {
     id: {type: DataTypes.INTEGER, primaryKey: true, allowNull: false, autoIncrement: true},
     name: {type: DataTypes.STRING, unique: true, allowNull: false},
-    genre_id: {type: DataTypes.INTEGER, allowNull: false},
-    description: {type: DataTypes.TEXT,unique: true},
+    description: {type: DataTypes.TEXT, unique: true},
     duration: {type: DataTypes.INTEGER, allowNull: false},
-    release_date: {type: DataTypes.DATE},
-    format_id: {type: DataTypes.INTEGER, allowNull: false},
-    faces_id: {type: DataTypes.INTEGER, allowNull: false},
-    nominations_id: {type: DataTypes.INTEGER},
-    awards_id: {type: DataTypes.INTEGER}
+    release_date: {type: DataTypes.DATE}
 })
 
 const Genre = sequelize.define('genre', {
@@ -33,15 +28,11 @@ const Format = sequelize.define('format', {
     description: {type: DataTypes.STRING,unique: true, allowNull: false}  
 })
 
-const Faces = sequelize.define('faces', {
+const Person = sequelize.define('person', {
     id: {type: DataTypes.INTEGER, primaryKey: true, allowNull: false, autoIncrement: true},
     name: {type: DataTypes.STRING, unique: true, allowNull: false},
     birth: {type: DataTypes.STRING, unique: false, allowNull: false},
-    photo_link: {type: DataTypes.STRING, unique: true},
-    position_id: {type: DataTypes.INTEGER, unique: true, allowNull: false},
-    projects_id: {type: DataTypes.STRING, unique: false, allowNull: false},
-    nominations_id: {type: DataTypes.INTEGER},
-    awards_id: {type: DataTypes.INTEGER}
+    photo_link: {type: DataTypes.STRING, unique: true}
 })
 
 const Position = sequelize.define('position', {
@@ -50,43 +41,41 @@ const Position = sequelize.define('position', {
     description: {type: DataTypes.TEXT, unique: true}  
 })
 
-const Nominations = sequelize.define('nominations', {
+const Nomination = sequelize.define('nomination', {
     id: {type: DataTypes.INTEGER, primaryKey: true, allowNull: false, autoIncrement: true},
     name: {type: DataTypes.STRING, unique: true, allowNull: false},
     description: {type: DataTypes.STRING,unique: true, allowNull: false},
-    nomination_date: {type: DataTypes.DATE, allowNull: false},
-    award_id: {type: DataTypes.INTEGER, allowNull: false},
-    films_id: {type: DataTypes.INTEGER, allowNull: false},
-    faces_id: {type: DataTypes.INTEGER, allowNull: false}   
+    nomination_date: {type: DataTypes.DATE, allowNull: false}
 })
 
-const Awards = sequelize.define('awards', {
+const Award = sequelize.define('award', {
     id: {type: DataTypes.INTEGER, primaryKey: true, allowNull: false, autoIncrement: true},
     name: {type: DataTypes.STRING, unique: true, allowNull: false},
     description: {type: DataTypes.STRING,unique: true, allowNull: false},
-    award_date: {type: DataTypes.DATE, allowNull: false},
-    nomination_id: {type: DataTypes.INTEGER, allowNull: false},
-    films_id: {type: DataTypes.INTEGER, allowNull: false},
-    faces_id: {type: DataTypes.INTEGER, allowNull: false}
+    award_date: {type: DataTypes.DATE, allowNull: false}
 })
 
 const FilmGenre = sequelize.define('film_genre', {
     id: {type: DataTypes.INTEGER, primaryKey: true, allowNull: false, autoIncrement: true},
 })
 
-const FilmFaces = sequelize.define('film_faces', {
+const FilmPerson = sequelize.define('film_person', {
     id: {type: DataTypes.INTEGER, primaryKey: true, allowNull: false, autoIncrement: true},
 })
 
-const FilmNominations = sequelize.define('film_nominations', {
+const FilmNomination = sequelize.define('film_nomination', {
     id: {type: DataTypes.INTEGER, primaryKey: true, allowNull: false, autoIncrement: true},
 })
 
-const FacesNominations = sequelize.define('faces_nominations', {
+const FilmFormat = sequelize.define('film_format', {
     id: {type: DataTypes.INTEGER, primaryKey: true, allowNull: false, autoIncrement: true},
 })
 
-const FacesPosition = sequelize.define('faces_position', {
+const PersonNomination = sequelize.define('person_nomination', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, allowNull: false, autoIncrement: true},
+})
+
+const PersonPosition = sequelize.define('person_position', {
     id: {type: DataTypes.INTEGER, primaryKey: true, allowNull: false, autoIncrement: true},
 })
 
@@ -95,42 +84,42 @@ const FacesPosition = sequelize.define('faces_position', {
 Film.belongsToMany(Genre, {through: FilmGenre})
 Genre.belongsToMany(Film, {through: FilmGenre})
 
-Film.belongsToMany(Faces, {through: FilmFaces})
-Faces.belongsToMany(Film, {through: FilmFaces})
+Film.belongsToMany(Person, {through: FilmPerson})
+Person.belongsToMany(Film, {through: FilmPerson})
 
-Film.belongsToMany(Nominations, {through: FilmNominations})
-Nominations.belongsToMany(Film, {through: FilmNominations})
+Film.belongsToMany(Nomination, {through: FilmNomination})
+Nomination.belongsToMany(Film, {through: FilmNomination})
 
-Format.hasMany(Film)
-Film.belongsTo(Format)
+Format.hasMany(Film, {through: FilmFormat})
+Film.belongsTo(Format, {through: FilmFormat})
 
-Film.hasMany(Awards)
-Awards.belongsTo(Film)
+Film.hasMany(Award)
+Award.belongsTo(Film)
 
-Faces.belongsToMany(Nominations, {through: FacesNominations})
-Nominations.belongsToMany(Faces, {through: FacesNominations})
+Person.belongsToMany(Nomination, {through: PersonNomination})
+Nomination.belongsToMany(Person, {through: PersonNomination})
 
-Faces.belongsToMany(Position, {through: FacesPosition})
-Position.belongsToMany(Faces, {through: FacesPosition})
+Person.belongsToMany(Position, {through: PersonPosition})
+Position.belongsToMany(Person, {through: PersonPosition})
 
-Faces.hasMany(Awards)
-Awards.belongsTo(Faces)
+Person.hasMany(Award)
+Award.belongsTo(Person)
 
-Nominations.hasOne(Awards)
-Awards.belongsTo(Nominations)
+Nomination.hasOne(Award)
+Award.belongsTo(Nomination)
 
 module.exports = {
     User,
     Film,
     Genre,
     Format,
-    Faces,
+    Person,
     Position,
-    Nominations,
-    Awards,
+    Nomination,
+    Award,
     FilmGenre,
-    FilmFaces,
-    FilmNominations,
-    FacesNominations,
-    FacesPosition
+    FilmPerson,
+    FilmNomination,
+    PersonNomination,
+    PersonPosition
 }
