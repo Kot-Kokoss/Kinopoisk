@@ -2,10 +2,10 @@ import Admin from "./pages/Admin"
 import Auth from "./pages/Auth"
 import FilmFinder from "./pages/FilmFinder"
 import FilmPage from "./pages/FilmPage"
-import FacePage from "./pages/FacePage"
+import PersonPage from "./pages/PersonPage"
 import NominationPage from "./pages/NominationPage"
 import AwardPage from "./pages/AwardPage"
-import { ADMIN_ROUTE, AWARD_ROUTE, FACE_ROUTE, FILM_FINDER_ROUTE, FILM_ROUTE, LOGIN_ROUTE, NOMINATION_ROUTE, REGISTRATION_ROUTE } from "./utils/consts"
+import { ADMIN_ROUTE, AWARD_ROUTE, PERSON_ROUTE, FILM_FINDER_ROUTE, FILM_ROUTE, LOGIN_ROUTE, NOMINATION_ROUTE, REGISTRATION_ROUTE } from "./utils/consts"
 
 export const authRoutes = [
     {
@@ -32,8 +32,8 @@ export const publicRoutes = [
         Element: <FilmPage />
     },
     {
-        path: FACE_ROUTE + '/:id',
-        Element: <FacePage />
+        path: PERSON_ROUTE + '/:id',
+        Element: <PersonPage />
     },
     {
         path: NOMINATION_ROUTE + '/:id',

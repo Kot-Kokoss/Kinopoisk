@@ -2,18 +2,7 @@ import {makeAutoObservable} from "mobx";
 
 export default class finder {
     constructor() {
-        this._faces = [
-            {"id": 1,
-            "name": "Дуэйн Дуглас Джонсон",
-            "birth": "12",
-            "photo_link": "e67d6621-58e8-48fb-b728-4efa7b713273.jpg",
-            "position_id": 2,
-            "projects_id": "3",
-            "nominations_id": 10,
-            "awards_id": 32,
-            "createdAt": "2024-01-09T16:32:15.241Z",
-            "updatedAt": "2024-01-09T16:32:15.241Z"}
-        ]
+        this._person = []
         this._positions = []
         this._nominations = []
         this._awards = []
@@ -24,8 +13,8 @@ export default class finder {
         makeAutoObservable(this)
     }
     
-    setFaces(faces) {
-       this._faces = faces 
+    setFaces(persons) {
+       this._persons = persons 
     }
     setPositions(positions) {
         this._positions = positions 
@@ -46,8 +35,8 @@ export default class finder {
         this._genres = genres 
     }
 
-    get Faces() {
-        return this._faces
+    get Persons() {
+        return this._persons
     }
     get Positions() {
         return this._positions

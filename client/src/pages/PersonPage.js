@@ -1,11 +1,11 @@
 import React from 'react';
 
-const FacePage = () => {
+const PersonPage = () => {
     return (
         <div>
-            FACE_PAGE
+            PERSON_PAGE
         </div>
     );
 };
 
-export default FacePage;
+export default PersonPage;

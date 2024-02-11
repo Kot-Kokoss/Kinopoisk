@@ -90,8 +90,8 @@ Person.belongsToMany(Film, {through: FilmPerson})
 Film.belongsToMany(Nomination, {through: FilmNomination})
 Nomination.belongsToMany(Film, {through: FilmNomination})
 
-Format.hasMany(Film, {through: FilmFormat})
-Film.belongsTo(Format, {through: FilmFormat})
+Format.hasMany(Film)
+Film.belongsTo(Format)
 
 Film.hasMany(Award)
 Award.belongsTo(Film)
